@@ -62,7 +62,7 @@ const cushionTangentRetention = 0.995;
 const ballRestitution = 0.98;
 
 const friction = 0.985;
-const maxShotSpeed = 26;
+const maxShotSpeed = 60;
 const cueSpawn = { x: 150, y: height / 2 };
 
 /* -------------------------------
@@ -388,7 +388,7 @@ function drawSidePocketSurround(pocket) {
 
   const halfWidth = sideMouthHalf + 10;
   const outerY = -railThickness;
-  const innerY = 1.5;
+  const innerY = -2;
   const radius = 8;
 
   roundedRectPath(-halfWidth, outerY, halfWidth * 2, innerY - outerY, radius);
@@ -467,7 +467,8 @@ function drawPocketThroats() {
     }
 
     ctx.closePath();
-    ctx.fillStyle = gradient;
+    //ctx.fillStyle = gradient;
+    ctx.fillStyle = '#086b3a';
     ctx.fill();
   }
 }
@@ -525,6 +526,7 @@ function drawPocketLiners() {
     well.addColorStop(1, '#000000');
     ctx.fillStyle = well;
     ctx.fill();
+
 
     tracePocketShape(pocket, 1.01);
     ctx.strokeStyle = 'rgba(246,239,218,0.13)';
