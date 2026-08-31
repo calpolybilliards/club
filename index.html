@@ -33,6 +33,7 @@
 
     /* --- Content Sections --- */
     .tab-content { display: none; padding: 3rem 2rem; max-width: 900px; margin: auto; }
+    #demo { max-width: 1000px; }
     .tab-content.active { display: block; }
     section h2 {
       color: #154734; margin-bottom: 1rem;
@@ -44,8 +45,15 @@
 
     /* --- Pool Canvas --- */
     #poolCanvas {
-      display: block; margin: 2rem auto;
-      background-color: #006400; border: 3px solid #154734; border-radius: 8px;
+      display: block;
+      width: min(100%, 900px);
+      height: auto;
+      margin: 2rem auto;
+      background-color: #086b3a;
+      border: 7px solid #4a2512;
+      border-radius: 12px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.24);
+      touch-action: none;
     }
   </style>
 </head>
@@ -73,9 +81,9 @@
   <section id="about" class="tab-content active">
     <h2>About Us</h2>
     <p>The Cal Poly Billiards Club is a student-run organization at California Polytechnic State University, San Luis Obispo. We provide a space for Cal Poly students to improve and play billiards games, such as 8-ball, 9-ball, and 10-ball pool. No experience required to join, welcoming all casual, beginner, and competitive players. 
-    <br><br> Join here on Cal Poly Now: <a href="https://now.calpoly.edu/organization/cppc">https://now.calpoly.edu/organization/cppc</a> 
+    <br><br> Join here on Cal Poly Now: <a href="https://now.calpoly.edu/organization/cpbc">https://now.calpoly.edu/organization/cppc</a> 
     
-    <br><br> Click here to join our GroupMe for club notifications: <a href="https://groupme.com/join_group/110358848/BeRjsKpn">https://groupme.com/join</a> 
+    <br><br> Click here to join our GroupMe for club notifications: <a href="https://groupme.com/join_group/116766790/yHrP5pV5">https://groupme.com/join</a> 
 
     <br><br> Follow our club Instagram here: <a href="https://www.instagram.com/calpolybilliards?igsh=NTc4MTIwNjQ2YQ%3D%3D">https://www.instagram.com/calpolybilliards</a> 
     
@@ -84,7 +92,7 @@
 
   <section id="events" class="tab-content">
     <h2>Events</h2>
-    <p>The Cal Poly Billiards Club meets once a week at the Mustang Langs in the University Union from 6-9 PM. Join us for casual games and food free of charge! No prior experience required to play!
+    <p>The Cal Poly Billiards Club meets once a week at the Mustang Langs in the University Union from 6-9 PM on Wednesdays. Join us for casual games and food free of charge! No prior experience required to play!
 
     <br><br>Stay tuned for tournaments later this year at Hot Shots Billiards in Pismo Beach!
 
@@ -107,14 +115,16 @@
 
   <section id="demo" class="tab-content">
     <h2>Pool Demo (many more updates coming soon!)</h2>
-    <!-- default is 900,450 -->
+    <!-- default (9 foot) is 900,450 -->
+    <!-- 8 foot is 800,400 -->
+    <!-- 8 foot is 700,350 -->
     <canvas id="poolCanvas" width="900" height="450"></canvas> 
     <p style="text-align:center;">Click and drag on the cue ball to aim and shoot!</p>
   </section>
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2025 Cal Poly Billiards Club | San Luis Obispo, CA</p>
+    <p>&copy; 2027 Cal Poly Billiards Club | San Luis Obispo, CA</p>
   </footer>
 
   <!-- Tab Switching Script -->
@@ -133,6 +143,6 @@
   </script>
 
   <!-- Import Pool Demo JS -->
-  <script src="pd2.js"></script>
+  <script src="pd.js?v=4"></script>
 </body>
 </html>
