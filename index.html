@@ -39,7 +39,7 @@
 
     /* --- Content Sections --- */
     .tab-content { display: none; padding: 1rem 2rem 3rem; max-width: 900px; margin: auto; }
-    #demo { max-width: 1000px; }
+    #demo { max-width: 1240px; }
     .tab-content.active { display: block; }
     section h2 {
       color: #154734; margin-bottom: 1rem;
@@ -49,12 +49,168 @@
     /* --- Footer --- */
     footer { background-color: #154734; color: white; text-align: center; padding: 1rem; margin-top: 2rem; }
 
-    /* --- Pool Canvas --- */
+    /* --- Pool Canvas and Shot Power --- */
+    .pool-demo-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 2rem auto;
+    }
+    .shot-power-controls {
+      flex: 0 0 82px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 9px;
+    }
+    .shot-power-controls .power-label { font-weight: 600; }
+    /* The empty area remains light gray as the fixed spectrum fills upward. */
+    .power-meter {
+      --power-unfilled: 50%;
+      --power-level: 50%;
+      position: relative;
+      width: 38px;
+      height: 240px;
+      /* The meter itself is centered between its label and percentage. */
+      background: #d9dcdf;
+      border: 1px solid #acb2b6;
+      border-radius: 9px;
+      box-shadow: inset 0 1px 4px rgba(0,0,0,0.12);
+      cursor: pointer;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .power-meter:focus-visible {
+      outline: 3px solid #154734;
+      outline-offset: 4px;
+    }
+    .power-meter-spectrum {
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      background: linear-gradient(to top,
+        #23e84a 0%,
+        #81ec37 22%,
+        #ffe63b 48%,
+        #ffa12e 73%,
+        #ed3535 100%);
+      /* Clip a full-height gradient so low power is always green. */
+      clip-path: inset(var(--power-unfilled) 0 0 0 round 7px);
+      pointer-events: none;
+      transition: clip-path 140ms ease-out;
+    }
+    .power-meter-handle {
+      position: absolute;
+      z-index: 1;
+      top: calc(100% - var(--power-level));
+      left: -22px; /* protrudes 22px left, overlaps the meter by 5px */
+      width: 27px;
+      height: 16px;
+      border: 1px solid #777f84;
+      border-radius: 5px;
+      background: linear-gradient(#fbfcfc, #cbd1d5);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.26);
+      transform: translateY(-50%);
+      cursor: grab;
+      touch-action: none;
+      transition: top 140ms ease-out;
+    }
+    .power-meter-handle::after {
+      content: '';
+      position: absolute;
+      inset: 4px 8px;
+      border-left: 1px solid #8d9599;
+      border-right: 1px solid #8d9599;
+      pointer-events: none;
+    }
+    .power-meter.is-dragging .power-meter-handle { cursor: grabbing; }
+    .power-meter.is-dragging .power-meter-handle,
+    .power-meter.is-dragging .power-meter-spectrum { transition: none; }
+    #shotPowerValue { font-variant-numeric: tabular-nums; }
+    /* Design #1: green felt face, polished wood frame, cream lettering. */
+    .shoot-controls {
+      flex: 0 0 138px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #shootButton {
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      place-items: center;
+      width: 138px;
+      height: 72px;
+      padding: 0;
+      border: 9px solid transparent;
+      border-radius: 25px;
+      appearance: none;
+      color: #f5e5bc;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(35, 151, 93, 0.6), transparent 72%) padding-box,
+        linear-gradient(to bottom, #045d37, #004328 65%, #002e1b) padding-box,
+        linear-gradient(130deg, #dca66a 0%, #84451f 17%, #3b1c0e 35%, #ac6c39 56%, #6a3217 76%, #d39863 100%) border-box;
+      box-shadow:
+        0 2px 0 #3e1d0b,
+        0 8px 13px rgba(20, 16, 10, 0.26),
+        inset 0 3px 9px rgba(0, 13, 8, 0.6),
+        inset 0 -2px 5px rgba(0, 13, 8, 0.5);
+      cursor: pointer;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-shadow: 0 2px 1px #002319, 0 0 5px rgba(255, 230, 170, 0.17);
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 130ms ease, box-shadow 130ms ease, filter 130ms ease;
+    }
+    /* A thin warm highlight follows the wood's outer rounded rim. */
+    #shootButton::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border: 2px solid rgba(244, 187, 127, 0.65);
+      border-radius: 22px;
+      box-shadow: inset 0 1px 0 rgba(255, 237, 208, 0.36);
+      pointer-events: none;
+    }
+    /* Inset green-felt bevel and subtle sheen. */
+    #shootButton::after {
+      content: '';
+      position: absolute;
+      inset: 1px;
+      border: 2px solid rgba(0, 33, 21, 0.78);
+      border-radius: 15px;
+      background: linear-gradient(to bottom, rgba(198, 255, 210, 0.08), transparent 43%);
+      box-shadow: inset 0 1px 3px rgba(0, 17, 9, 0.5), 0 1px 0 rgba(172, 113, 63, 0.35);
+      pointer-events: none;
+    }
+    #shootButton > span { position: relative; z-index: 1; }
+    #shootButton:hover:not(:disabled) {
+      filter: brightness(1.09);
+      transform: translateY(-1px);
+    }
+    #shootButton:active:not(:disabled) {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #3e1d0b, 0 3px 6px rgba(20, 16, 10, 0.25), inset 0 3px 10px rgba(0, 13, 8, 0.65);
+    }
+    #shootButton:focus-visible { outline: 3px solid #ffc72c; outline-offset: 5px; }
+    #shootButton:disabled { cursor: not-allowed; filter: saturate(0.6) brightness(0.86); }
+    @media (max-width: 760px) {
+      .pool-demo-controls { gap: 10px; }
+      .shoot-controls { flex-basis: 110px; }
+      #shootButton { width: 110px; height: 63px; font-size: 18px; }
+    }
     #poolCanvas {
       display: block;
-      width: min(100%, 900px);
+      width: 100%;
+      max-width: 900px;
+      min-width: 0;
+      flex: 1 1 auto;
       height: auto;
-      margin: 2rem auto;
+      margin: 0;
       background-color: #086b3a;
       border: 7px solid #4a2512;
       border-radius: 12px;
@@ -114,7 +270,7 @@
   <section id="contact" class="tab-content">
     <h2>Contact</h2>
     <p>
-      Feel free to reach out by email or by GroupMe <a href="https://groupme.com/join_group/110358848/BeRjsKpn">here</a> with any questions!
+      Feel free to reach out by email or by GroupMe <a href="https://groupme.com/join_group/116766790/yHrP5pV5">here</a> with any questions!
       <br><br>President: Jackson Haught <br> Vice President: Tommie Nguyen <br>Treasurer: Karch Molnar <br> Secretary: Mia Lyon
 
     <br><br>📧 Email: <a href="mailto:calpolybilliards@gmail.com">calpolybilliards@gmail.com</a><br>
@@ -123,8 +279,21 @@
 
   <section id="demo" class="tab-content">
     <h2>Pool Demo (many more updates coming soon!)</h2>
-    <canvas id="poolCanvas" width="900" height="450"></canvas>
-    <p style="text-align:center;">Click and drag on the cue ball to aim and shoot!</p>
+    <div class="pool-demo-controls">
+      <div class="shot-power-controls">
+        <span id="shotPowerLabel" class="power-label">Power</span>
+        <div id="shotPower" class="power-meter" role="slider" tabindex="0"
+             aria-labelledby="shotPowerLabel" aria-orientation="vertical"
+             aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+          <div class="power-meter-spectrum" aria-hidden="true"></div>
+          <div id="powerHandle" class="power-meter-handle" aria-hidden="true"></div>
+        </div>
+        <output id="shotPowerValue">50%</output>
+      </div>
+      <canvas id="poolCanvas" width="900" height="450"></canvas>
+      <div class="shoot-controls"><button id="shootButton" type="button" aria-label="Shoot pool cue"><span>SHOOT</span></button></div>
+    </div>
+    <p style="text-align:center;">Click and hold the cue, then drag to aim. Set power on the left and press Shoot on the right.</p>
   </section>
 
   <!-- Footer -->
@@ -151,6 +320,6 @@
   </script>
 
   <!-- Import Pool Demo JS -->
-  <script src="pd.js?v=4"></script>
+  <script src="pd5.js"></script>
 </body>
 </html>
